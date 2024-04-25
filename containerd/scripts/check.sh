@@ -27,4 +27,7 @@ if ! command_exists apparmor_parser; then
   sed -i 's/disable_apparmor = false/disable_apparmor = true/g' ../etc/config.toml
   warn "Replace disable_apparmor = false to disable_apparmor = true"
 fi
+if /usr/bin/crun --version 2>/dev/null | grep -q .99; then
+  sed -i -E 's~default_runtime_name = ".+"~default_runtime_name = "crun"~' ../etc/config.toml
+fi
 logger "check root,port,cri success"
